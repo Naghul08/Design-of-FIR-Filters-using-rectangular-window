@@ -10,8 +10,46 @@
   PC Installed with SCILAB 
 
 # PROGRAM 
+```
+clc;
+clear;
+close;
+N = 25;           
+wc = 0.4 * %pi;    
+alpha = (N - 1) / 2; 
 
+hd = zeros(1, N);
+for n = 0:N-1
+    if (n - alpha) == 0 then
+        hd(n+1) = wc / %pi;
+    else
+        hd(n+1) = sin(wc * (n - alpha)) / (%pi * (n - alpha));
+    end
+end
+
+w = ones(1, N);
+
+h = hd .* w;
+
+Nfft = 1024;              
+H = fft(h, -1);           
+H = [H, zeros(1, Nfft - N)];
+H = fft(H, -1);           
+
+f = (0:Nfft-1) / Nfft;
+
+plot(f, abs(H));
+xlabel('Normalized Frequency');
+ylabel('Magnitude');
+title('Low Pass FIR Filter using Rectangular Window');
+xgrid();
+
+disp("Filter Coefficients:");
+disp(h);
+```
 
 # OUTPUT
+<img width="1919" height="1138" alt="image" src="https://github.com/user-attachments/assets/d9d5568b-8eec-47bb-bf59-fc15aaf4c75a" />
 
 # RESULT
+Thus the given program is executed successfully and the output is verified.
